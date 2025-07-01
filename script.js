@@ -35,31 +35,31 @@ const digitBtn = document.querySelectorAll("button.digit")
 const operatorBtn = document.querySelectorAll("button.operator")
 const clearBtn = document.querySelector("button.clear")
 const resultBtn = document.querySelector("button.result")
+display.textContent = 0;
 
 digitBtn.forEach((button) => {
     button.addEventListener("click", () => {
-        display.textContent += button.textContent;
+        if (display.textContent === "0") {
+            display.textContent = button.textContent;
+        } else {
+            display.textContent += button.textContent;
+        }
     });
 });
 
 operatorBtn.forEach((button) => {
     button.addEventListener("click", () => {
-    const op = button.textContent;
-    const operation = display.textContent;
-    const lastChar = operation.slice(-1);
+        const op = button.textContent;
+        const operation = display.textContent;
 
-    if (operation === "") {
-        if (op === "-") {
+        if (!/[+\-*÷]/.test(operation) && /\d$/.test(operation)) {
             display.textContent += op;
         }
-    } else if (/\d/.test(lastChar)) {
-        display.textContent += op;
-    }
     });
 });
 
 clearBtn.addEventListener("click", () => {
-    display.textContent = "";
+    display.textContent = "0";
 });
 
 let operation = display.textContent;
