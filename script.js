@@ -11,6 +11,8 @@ function divide(a, b) {
     return a / b;
 }
 
+let waitingForNextNumber = false;
+let hasSecondNumber = false;
 let number;
 let numberN;
 let operator;
@@ -46,7 +48,11 @@ const resultBtn = document.querySelector("button.result")
 
 digitBtn.forEach((button) => {
     button.addEventListener("click", () => {
-        if (currentDisplay.textContent === "0" || currentDisplay.textContent === "") {
+        if (waitingForNextNumber) {
+            currentDisplay.textContent = button.textContent;
+            waitingForNextNumber = false;
+            hasSecondNumber = true;
+        } else if (currentDisplay.textContent === "0" || currentDisplay.textContent === "") {
             currentDisplay.textContent = button.textContent;
         } else {
             currentDisplay.textContent += button.textContent;
@@ -54,16 +60,24 @@ digitBtn.forEach((button) => {
     });
 });
 
+
+
 operatorBtn.forEach((button) => {
     button.addEventListener("click", () => {
         const op = button.textContent;
         const operation = currentDisplay.textContent;
 
+        if (waitingForNextNumber) {
+            return;
+        }
+        
         if(justCalculated) {
             currentCalculation.firstNumber = parseFloat(operation);
             currentCalculation.operator = op;
             calculationDisplay.textContent = operation + " " + op;
             justCalculated = false;
+            waitingForNextNumber = true;
+            hasSecondNumber = false;
             return;
         }
 
@@ -71,7 +85,8 @@ operatorBtn.forEach((button) => {
             currentCalculation.firstNumber = parseFloat(operation);
             currentCalculation.operator = op;
             calculationDisplay.textContent = operation + " " + op;
-            currentDisplay.textContent = "0";
+            waitingForNextNumber = true;
+            hasSecondNumber = false;
         }
     });
 });
@@ -79,21 +94,24 @@ operatorBtn.forEach((button) => {
 clearBtn.addEventListener("click", () => {
     currentDisplay.textContent = "0";
     calculationDisplay.textContent = "";
+    waitingForNextNumber = false;
+    hasSecondNumber = false;
 });
 
 let justCalculated = false;
 
 resultBtn.addEventListener("click", () => {
-    if (currentCalculation.operator && currentDisplay.textContent !== "0") {
+    if (currentCalculation.operator && hasSecondNumber) {
         currentCalculation.secondNumber = parseFloat(currentDisplay.textContent);
         let opSymbol = currentCalculation.operator
         let result = operate(
             currentCalculation.firstNumber,
             currentCalculation.secondNumber,
-            opSymbol === "÷" ? "/" : opSymbol
+            opSymbol 
         );
-        calculationDisplay.textContent = `${currentCalculation.firstNumber} ${opSymbol} ${currentCalculation.secondNumber}`;
+        calculationDisplay.textContent = `${currentCalculation.firstNumber} ${opSymbol} ${currentCalculation.secondNumber} =`;
         currentDisplay.textContent = result;
         justCalculated = true;
+        hasSecondNumber = false;
     }
 });
