@@ -14,20 +14,28 @@ function divide(a, b) {
 let number;
 let numberN;
 let operator;
-const display = document.querySelector("p");
+const calculationDisplay = document.querySelector("p.calculation");
+const currentDisplay = document.querySelector("p.current");
+let currentCalculation = {
+    firstNumber: null,
+    operator: null,
+    secondNumber: null
+};
 
-function operate(number, numberN, operator) {
+currentDisplay.textContent = "0";
+
+function operate(firstNumber, secondNumber, operator) {
     if (operator === "+") {
-        return add(number, numberN);
+        return add(firstNumber, secondNumber);
     }
     if (operator === "-") {
-        return subtract(number, numberN);
+        return subtract(firstNumber, secondNumber);
     }
     if (operator === "*") {
-        return multiply(number, numberN);
+        return multiply(firstNumber, secondNumber);
     }
-    if (operator === "/") {
-        return divide(number, numberN);
+    if (operator === "÷") {
+        return divide(firstNumber, secondNumber);
     }
 }
 
@@ -35,14 +43,13 @@ const digitBtn = document.querySelectorAll("button.digit")
 const operatorBtn = document.querySelectorAll("button.operator")
 const clearBtn = document.querySelector("button.clear")
 const resultBtn = document.querySelector("button.result")
-display.textContent = 0;
 
 digitBtn.forEach((button) => {
     button.addEventListener("click", () => {
-        if (display.textContent === "0") {
-            display.textContent = button.textContent;
+        if (currentDisplay.textContent === "0" || currentDisplay.textContent === "") {
+            currentDisplay.textContent = button.textContent;
         } else {
-            display.textContent += button.textContent;
+            currentDisplay.textContent += button.textContent;
         }
     });
 });
@@ -50,20 +57,43 @@ digitBtn.forEach((button) => {
 operatorBtn.forEach((button) => {
     button.addEventListener("click", () => {
         const op = button.textContent;
-        const operation = display.textContent;
+        const operation = currentDisplay.textContent;
 
-        if (!/[+\-*÷]/.test(operation) && /\d$/.test(operation)) {
-            display.textContent += op;
+        if(justCalculated) {
+            currentCalculation.firstNumber = parseFloat(operation);
+            currentCalculation.operator = op;
+            calculationDisplay.textContent = operation + " " + op;
+            justCalculated = false;
+            return;
+        }
+
+        if (!/[+\-*÷]/.test(calculationDisplay.textContent) && /\d$/.test(operation)) {
+            currentCalculation.firstNumber = parseFloat(operation);
+            currentCalculation.operator = op;
+            calculationDisplay.textContent = operation + " " + op;
+            currentDisplay.textContent = "0";
         }
     });
 });
 
 clearBtn.addEventListener("click", () => {
-    display.textContent = "0";
+    currentDisplay.textContent = "0";
+    calculationDisplay.textContent = "";
 });
 
-let operation = display.textContent;
+let justCalculated = false;
 
 resultBtn.addEventListener("click", () => {
-    let operation = display.textContent;
+    if (currentCalculation.operator && currentDisplay.textContent !== "0") {
+        currentCalculation.secondNumber = parseFloat(currentDisplay.textContent);
+        let opSymbol = currentCalculation.operator
+        let result = operate(
+            currentCalculation.firstNumber,
+            currentCalculation.secondNumber,
+            opSymbol === "÷" ? "/" : opSymbol
+        );
+        calculationDisplay.textContent = `${currentCalculation.firstNumber} ${opSymbol} ${currentCalculation.secondNumber}`;
+        currentDisplay.textContent = result;
+        justCalculated = true;
+    }
 });
