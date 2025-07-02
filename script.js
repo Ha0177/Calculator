@@ -91,11 +91,12 @@ operatorButtons.forEach((button) => {
         // Chaining calculation logic
         if (calculation.operator && hasSecondOperand) {
             calculation.secondOperand = parseFloat(mainDisplay.textContent);
-            const result = operate(
+            let result = operate(
                 calculation.firstOperand,
                 calculation.secondOperand,
                 calculation.operator
             );
+            result = parseFloat(result.toFixed(2)); 
             calculationLine.textContent = `${result} ${operator}`;
             mainDisplay.textContent = result;
             calculation.firstOperand = result;
@@ -103,7 +104,7 @@ operatorButtons.forEach((button) => {
             waitingForNextInput = true;
             hasSecondOperand = false;
             justCalculated = false;
-            return
+            return;
         }
     });
 });
@@ -124,11 +125,12 @@ clearButton.addEventListener("click", () => {
 equalsButton.addEventListener("click", () => {
     if (calculation.operator && hasSecondOperand) {
         calculation.secondOperand = parseFloat(mainDisplay.textContent);
-        const result = operate(
+        let result = operate(
             calculation.firstOperand,
             calculation.secondOperand,
             calculation.operator
         );
+        result = parseFloat(result.toFixed(2)); 
         calculationLine.textContent = `${calculation.firstOperand} ${calculation.operator} ${calculation.secondOperand} =`;
         mainDisplay.textContent = result;
         justCalculated = true;
