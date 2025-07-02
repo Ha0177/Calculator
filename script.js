@@ -8,6 +8,10 @@ function multiply(a, b) {
     return a * b;
 }
 function divide(a, b) {
+    if (b === 0) {
+        alert("Error: Division by zero");
+        return;
+    }
     return a / b;
 }
 
@@ -58,6 +62,12 @@ digitButtons.forEach((button) => {
             mainDisplay.textContent = button.textContent;
         } else {
             mainDisplay.textContent += button.textContent;
+        }
+
+        // Replace result if digit is pressed
+        if (justCalculated) {
+            mainDisplay.textContent = "";
+            mainDisplay.textContent = button.textContent;
         }
     });
 });
