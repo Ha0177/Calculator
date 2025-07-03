@@ -20,6 +20,7 @@ let waitingForNextInput = false; // True after operator is pressed, waiting for 
 let hasSecondOperand = false;    
 let justCalculated = false;   
 let hasDecimalPoint = false;   // True after result is shown
+let hasReplaced = false;
 
 // DOM elements
 const calculationLine = document.querySelector("p.calculation"); 
@@ -51,6 +52,7 @@ const operatorButtons = document.querySelectorAll("button.operator");
 const clearButton = document.querySelector("button.clear");
 const equalsButton = document.querySelector("button.result");
 const decimalButton = document.querySelector("button.decimal");
+const deleteButton = document.querySelector("button.delete");
 
 // digit button clicks
 digitButtons.forEach((button) => {
@@ -67,9 +69,10 @@ digitButtons.forEach((button) => {
         }
 
         // Replace result if digit is pressed
-        if (justCalculated && !hasDecimalPoint) {
+        if (justCalculated && !hasReplaced) {
             mainDisplay.textContent = "";
-            mainDisplay.textContent = button.textContent;
+            hasReplaced = true;
+            mainDisplay.textContent += button.textContent;
         }
     });
 });
@@ -157,5 +160,12 @@ decimalButton.addEventListener("click", () => {
     if (!mainDisplay.textContent.includes(".")) {
         mainDisplay.textContent += decimalButton.textContent; 
         hasDecimalPoint = true;
+    }
+});
+
+deleteButton.addEventListener("click", () => {
+    mainDisplay.textContent = mainDisplay.textContent.slice(0, -1);
+    if (mainDisplay.textContent.length === 0) {
+        mainDisplay.textContent = "0";
     }
 });
