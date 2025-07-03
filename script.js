@@ -10,7 +10,7 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b === 0) {
         alert("Error: Division by zero");
-        return;
+        return null;
     }
     return a / b;
 }
@@ -169,3 +169,34 @@ deleteButton.addEventListener("click", () => {
         mainDisplay.textContent = "0";
     }
 });
+
+// Keyboard support
+document.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    // Prevent browser zoom 
+    if ((event.ctrlKey || event.metaKey || event.shiftKey) &&
+        (key === "+" || key === "-" || key === "=" || key === "0")) {
+        event.preventDefault();
+    }
+
+    // Digits
+    if (/\d/.test(key)) {
+        document.querySelector(`button.digit:nth-child(${parseInt(key) + 1})`).click();
+        return;
+    }
+
+    if (key === "+") document.querySelector("button.operator:nth-child(1)").click();
+    if (key === "-") document.querySelector("button.operator:nth-child(2)").click();
+    if (key === "*") document.querySelector("button.operator:nth-child(3)").click();
+    if (key === "/" || key === "÷") document.querySelector("button.operator:nth-child(4)").click();
+
+    if (key === ".") decimalButton.click();
+
+    if (key === "Enter" || key === "=") equalsButton.click();
+
+    if (key === "Escape" || key.toLowerCase() === "c") clearButton.click();
+
+    if (key === "Backspace") deleteButton.click();
+});
+
