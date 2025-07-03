@@ -18,7 +18,8 @@ function divide(a, b) {
 // State flags
 let waitingForNextInput = false; // True after operator is pressed, waiting for next number
 let hasSecondOperand = false;    
-let justCalculated = false;      // True after result is shown
+let justCalculated = false;   
+let hasDecimalPoint = false;   // True after result is shown
 
 // DOM elements
 const calculationLine = document.querySelector("p.calculation"); 
@@ -49,6 +50,7 @@ const digitButtons = document.querySelectorAll("button.digit");
 const operatorButtons = document.querySelectorAll("button.operator");
 const clearButton = document.querySelector("button.clear");
 const equalsButton = document.querySelector("button.result");
+const decimalButton = document.querySelector("button.decimal");
 
 // digit button clicks
 digitButtons.forEach((button) => {
@@ -65,7 +67,7 @@ digitButtons.forEach((button) => {
         }
 
         // Replace result if digit is pressed
-        if (justCalculated) {
+        if (justCalculated && !hasDecimalPoint) {
             mainDisplay.textContent = "";
             mainDisplay.textContent = button.textContent;
         }
@@ -114,6 +116,7 @@ operatorButtons.forEach((button) => {
             waitingForNextInput = true;
             hasSecondOperand = false;
             justCalculated = false;
+            hasDecimalPoint = false;
             return;
         }
     });
@@ -123,6 +126,7 @@ clearButton.addEventListener("click", () => {
     mainDisplay.textContent = "0";
     calculationLine.textContent = "";
     waitingForNextInput = false;
+    hasDecimalPoint = false;
     hasSecondOperand = false;
     justCalculated = false;
     calculation = {
@@ -145,5 +149,13 @@ equalsButton.addEventListener("click", () => {
         mainDisplay.textContent = result;
         justCalculated = true;
         hasSecondOperand = false;
+        hasDecimalPoint = false;
+    }
+});
+
+decimalButton.addEventListener("click", () => {
+    if (!mainDisplay.textContent.includes(".")) {
+        mainDisplay.textContent += decimalButton.textContent; 
+        hasDecimalPoint = true;
     }
 });
