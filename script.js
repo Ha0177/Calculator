@@ -174,8 +174,8 @@ deleteButton.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
     const key = event.key;
 
-    // Prevent browser zoom 
-    if ((event.ctrlKey || event.metaKey || event.shiftKey) &&
+    //Prevent zoom for Ctrl/Cmd + ...
+    if ((event.ctrlKey || event.metaKey) &&
         (key === "+" || key === "-" || key === "=" || key === "0")) {
         event.preventDefault();
     }
