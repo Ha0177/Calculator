@@ -1,83 +1,125 @@
+/* ========== Base ========== */
 * {
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
+    background: #fff;
+    font-family: monospace;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-div.calculator-container {
-    border: 1px solid black;
-    height: 600px;
-    width: 450px;
+/* ========== Title ========== */
+.calc-title {
+    margin: 32px 0 12px 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #222;
+    text-align: center;
+}
+
+/* ========== Calculator Container ========== */
+.calculator-container {
+    background: #222;
+    border: 2px solid #444;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px #8882;
+    width: 480px;
+    padding: 32px;
+    margin-bottom: 32px;
+    margin-top: 60px;
+}
+
+/* ========== Display ========== */
+.display {
+    background: rgba(144, 238, 144, 0.35);
+    color: #0f0;
+    border: 2px solid #b6ffb6;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    padding: 18px 18px 8px 18px;
+    min-height: 98px;
+    font-size: 2.2rem;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    backdrop-filter: blur(4px);
 }
 
-div.calculator-body {
-    border: 1px solid black;
-    height: 100%;
-    width: 100%;
-    padding: 20px;
-    display: flex;
-}
-
-div.btn {
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-div.display {
-    border: 1px solid black;
-    height: 100px;
-    padding: 20px;
-    align-content: space-around;
-    justify-items: flex-end;
-    margin: 20px;
+p.calculation {
+    color: #7fff7f;
+    font-size: 1.2rem;
+    margin-bottom: 4px;
 }
 
 p.current {
-    border: 1px solid black;
-    margin-top: 15px;
-    font-size: larger;
-    font-weight: 500;
+    color: #0f0;
+    font-size: 2.2rem;
+    font-weight: bold;
+    border: none;
+    background: none;
+    margin-top: 0;
 }
 
-button {
-    padding: 20px 30px;
-    border-radius: 5px;
-    font-size: larger;
-}
-
+/* ========== Button Grid ========== */
 .btn-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
 }
 
 .row {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
     justify-content: center;
+}
 
+/* ========== Buttons ========== */
+button {
+    flex: 1;
+    padding: 28px 0;
+    font-size: 1.5rem;
+    border: 1px solid #888;
+    border-radius: 6px;
+    background: #e0e0e0;
+    color: #222;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.07s;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+button.digit,
+button.decimal {
+    background: #e0e0e0;
+    color: #222;
+}
+
+button.operator,
+button.result {
+    background: #b0b0b0;
+    color: #222;
+    font-weight: bold;
 }
 
 button.clear,
 button.delete {
-    padding: 20px 63px;
+    background: #c62828;
+    color: #fff;
+    font-weight: bold;
+    padding: 28px 56px;
 }
 
 button.spacer {
@@ -85,7 +127,30 @@ button.spacer {
     pointer-events: none;
 }
 
-.row button {
-    flex: 1;
+/* ========== Footer ========== */
+.calc-footer {
+    margin: 18px 0 8px 0;
+    font-size: 0.95rem;
+    color: #444;
+    text-align: center;
+}
+
+.github-link {
+    color: #1976d2;
+    text-decoration: none;
+    margin-left: 6px;
+    font-weight: bold;
+}
+
+.github-icon {
+    vertical-align: middle;
+    height: 24px;
+    width: 24px;
+    margin-left: 4px;
+    transition: transform 0.5s;
+}
+
+.github-link:hover .github-icon {
+    transform: rotate(360deg);
 }
 
