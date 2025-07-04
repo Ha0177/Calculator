@@ -168,12 +168,6 @@ deleteButton.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
     const key = event.key;
 
-    // Prevent zoom for Ctrl/Cmd + ...
-    if ((event.ctrlKey || event.metaKey) &&
-        (key === "+" || key === "-" || key === "=" || key === "0")) {
-        event.preventDefault();
-    }
-
     // Digits (0-9)
     if (/^\d$/.test(key)) {
         // Find the button with matching text
