@@ -1,45 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1 class="calc-title">Calculator</h1>
+
     <div class="calculator-container">
         <div class="display">
             <p class="calculation"></p>
             <p class="current"></p>
         </div>
         <div class="calculator-body">
-            <div class="number-btn">
-                <button class="digit">0</button>
-                <button class="digit">1</button>
-                <button class="digit">2</button>
-                <button class="digit">3</button>
-                <button class="digit">4</button>
-                <button class="digit">5</button>
-                <button class="digit">6</button>
-                <button class="digit">7</button>
-                <button class="digit">8</button>
-                <button class="digit">9</button>
-            </div>
-            
-            <div class="action-btn">
-                <button class="operator">+</button>
-                <button class="operator">-</button>
-                <button class="operator">*</button>
-                <button class="operator">÷</button>
-                <button class="result">=</button>
-                <button class="decimal">.</button>
-                <button class="clear">AC</button>
-                <button class="delete">CE</button>
+            <div class="btn-grid">
+                <div class="row">
+                    <button class="spacer"></button>
+                    <button class="clear">CLEAR</button>
+                    <button class="delete">DELETE</button>
+                    <button class="spacer"></button>
+                </div>
+                <div class="row">
+                    <button class="digit">7</button>
+                    <button class="digit">8</button>
+                    <button class="digit">9</button>
+                    <button class="operator">÷</button>
+                </div>
+                <div class="row">
+                    <button class="digit">4</button>
+                    <button class="digit">5</button>
+                    <button class="digit">6</button>
+                    <button class="operator">*</button>
+                </div>
+                <div class="row">
+                    <button class="digit">1</button>
+                    <button class="digit">2</button>
+                    <button class="digit">3</button>
+                    <button class="operator">-</button>
+                </div>
+                <div class="row">
+                    <button class="decimal">.</button>
+                    <button class="digit">0</button>
+                    <button class="result">=</button>
+                    <button class="operator">+</button>
+                </div>
             </div>
         </div>
     </div>
 
-
+    <footer class="calc-footer">
+        <span>&copy; 2025 </span>
+        <a href="https://github.com/Ha0177" target="_blank" class="github-link">
+            Ha0177
+            <img src="Octicons-mark-github.svg.png" alt="GitHub" class="github-icon" height="24" width="24" style="vertical-align:middle;">
+        </a>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
