@@ -1,0 +1,91 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.calculator-container {
+    border: 1px solid black;
+    height: 600px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.calculator-body {
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+}
+
+div.btn {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+div.display {
+    border: 1px solid black;
+    height: 100px;
+    padding: 20px;
+    align-content: space-around;
+    justify-items: flex-end;
+    margin: 20px;
+}
+
+p.current {
+    border: 1px solid black;
+    margin-top: 15px;
+    font-size: larger;
+    font-weight: 500;
+}
+
+button {
+    padding: 20px 30px;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+.btn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+
+}
+
+button.clear,
+button.delete {
+    padding: 20px 63px;
+}
+
+button.spacer {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.row button {
+    flex: 1;
+}
+
