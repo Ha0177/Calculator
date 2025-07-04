@@ -54,7 +54,7 @@ const equalsButton = document.querySelector("button.result");
 const decimalButton = document.querySelector("button.decimal");
 const deleteButton = document.querySelector("button.delete");
 
-// digit button clicks
+// Digit button clicks
 digitButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (waitingForNextInput) {
@@ -62,13 +62,10 @@ digitButtons.forEach((button) => {
             waitingForNextInput = false;
             hasSecondOperand = true;
         } else if (mainDisplay.textContent === "0" || mainDisplay.textContent === "") {
-            // Replace leading zero
             mainDisplay.textContent = button.textContent;
         } else {
             mainDisplay.textContent += button.textContent;
         }
-
-        // Replace result if digit is pressed
         if (justCalculated && !hasReplaced) {
             mainDisplay.textContent = "";
             hasReplaced = true;
@@ -77,13 +74,12 @@ digitButtons.forEach((button) => {
     });
 });
 
-// operator button clicks
+// Operator button clicks
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const operator = button.textContent;
         const currentValue = mainDisplay.textContent;
 
-        // use result as first operand
         if (justCalculated) {
             calculation.firstOperand = parseFloat(currentValue);
             calculation.operator = operator;
@@ -94,7 +90,6 @@ operatorButtons.forEach((button) => {
             return;
         }
 
-        // Prevent multiple operators
         if (!/[+\-*÷]/.test(calculationLine.textContent) && /\d$/.test(currentValue)) {
             calculation.firstOperand = parseFloat(currentValue);
             calculation.operator = operator;
@@ -103,7 +98,6 @@ operatorButtons.forEach((button) => {
             hasSecondOperand = false;
         }
 
-        // Chaining calculation logic
         if (calculation.operator && hasSecondOperand) {
             calculation.secondOperand = parseFloat(mainDisplay.textContent);
             let result = operate(
@@ -111,7 +105,7 @@ operatorButtons.forEach((button) => {
                 calculation.secondOperand,
                 calculation.operator
             );
-            result = parseFloat(result.toFixed(2)); 
+            result = parseFloat(result.toFixed(2));
             calculationLine.textContent = `${result} ${operator}`;
             mainDisplay.textContent = result;
             calculation.firstOperand = result;
@@ -147,7 +141,7 @@ equalsButton.addEventListener("click", () => {
             calculation.secondOperand,
             calculation.operator
         );
-        result = parseFloat(result.toFixed(2)); 
+        result = parseFloat(result.toFixed(2));
         calculationLine.textContent = `${calculation.firstOperand} ${calculation.operator} ${calculation.secondOperand} =`;
         mainDisplay.textContent = result;
         justCalculated = true;
@@ -158,7 +152,7 @@ equalsButton.addEventListener("click", () => {
 
 decimalButton.addEventListener("click", () => {
     if (!mainDisplay.textContent.includes(".")) {
-        mainDisplay.textContent += decimalButton.textContent; 
+        mainDisplay.textContent += decimalButton.textContent;
         hasDecimalPoint = true;
     }
 });
@@ -174,22 +168,27 @@ deleteButton.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
     const key = event.key;
 
-    //Prevent zoom for Ctrl/Cmd + ...
+    // Prevent zoom for Ctrl/Cmd + ...
     if ((event.ctrlKey || event.metaKey) &&
         (key === "+" || key === "-" || key === "=" || key === "0")) {
         event.preventDefault();
     }
 
-    // Digits
-    if (/\d/.test(key)) {
-        document.querySelector(`button.digit:nth-child(${parseInt(key) + 1})`).click();
+    // Digits (0-9)
+    if (/^\d$/.test(key)) {
+        // Find the button with matching text
+        digitButtons.forEach(btn => {
+            if (btn.textContent === key) btn.click();
+        });
         return;
     }
 
-    if (key === "+") document.querySelector("button.operator:nth-child(1)").click();
-    if (key === "-") document.querySelector("button.operator:nth-child(2)").click();
-    if (key === "*") document.querySelector("button.operator:nth-child(3)").click();
-    if (key === "/" || key === "÷") document.querySelector("button.operator:nth-child(4)").click();
+    // Operator keys
+    // operatorButtons: [÷, *, -, +]
+    if (key === "+" || key === "=" && event.shiftKey) operatorButtons[3].click();
+    if (key === "-") operatorButtons[2].click();
+    if (key === "*") operatorButtons[1].click();
+    if (key === "/" || key === "÷") operatorButtons[0].click();
 
     if (key === ".") decimalButton.click();
 
